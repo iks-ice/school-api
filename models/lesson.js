@@ -13,6 +13,10 @@ const LessonSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+  classroom: {
+    type: Number,
+    require: true,
+  },
 });
 
 module.exports = mongoose.model('lessons', LessonSchema);
