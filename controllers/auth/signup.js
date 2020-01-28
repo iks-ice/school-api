@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-
+    await user.save();
     const payload = {
       user: {
         id: user.id,
@@ -37,9 +37,7 @@ module.exports = async (req, res) => {
       }
       res.json(token);
     });
-    await user.save();
   } catch (err) {
     console.error(err.message);
   }
-  res.json({ msg: 'signed up ' });
 };
