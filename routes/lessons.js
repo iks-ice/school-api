@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const checkAuth = require('../middlewares/checkAuth');
+const { checkAuth, checkRole } = require('../middlewares/checkPermissons');
 const Lesson = require('../models/lesson');
-const { addLesson } = require('../controllers/lessons');
+const { addLesson, editLesson } = require('../controllers/lessons');
 
 router.get('/', checkAuth, async (req, res) => {
   try {
@@ -13,5 +13,6 @@ router.get('/', checkAuth, async (req, res) => {
 });
 
 
-router.post('/', checkAuth, addLesson);
+router.post('/', checkAuth, checkRole, addLesson);
+router.put('/:id', checkAuth, checkRole, editLesson);
 module.exports = router;

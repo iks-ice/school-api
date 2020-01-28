@@ -15,8 +15,34 @@ const addLesson = async (req, res) => {
     res.json(lesson);
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ msg: 'Server Error' });
+  }
+};
+
+const editLesson = async (req, res) => {
+  const { subject, time, classroom } = req.body;
+  const lessonFields = {};
+  if (subject) lessonFields.subject = subject;
+  if (time) lessonFields.time = time;
+  if (classroom) lessonFields.classroom = classroom;
+  try {
+    let lesson = await Lesson.findById(req.params.id);
+    if (!lesson) {
+      return res.status(400).json({ msg: 'Lesson does not exist' });
+    }
+    if (req.user.id !== lesson.teacherId.toString()) {
+      return res.status(400).json({ msg: 'You do not have permission to edit lessons of other teachers' });
+    }
+    lesson = await Lesson.findOneAndUpdate(req.params.id,
+      { $set: lessonFields },
+      { new: true });
+    res.json(lesson);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server Error' });
   }
 };
 module.exports = {
   addLesson,
+  editLesson,
 };

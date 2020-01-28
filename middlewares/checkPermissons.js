@@ -20,7 +20,6 @@ const checkAuth = async (req, res, next) => {
 const checkRole = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
-    console.log(user);
     if (user.role === 'teacher') {
       return next();
     }
