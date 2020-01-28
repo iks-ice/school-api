@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 const Lesson = require('../../models/lesson');
+const User = require('../../models/user');
 
 
 const read = async (req, res) => {
@@ -22,7 +23,11 @@ const create = async (req, res) => {
     const lesson = new Lesson({
       subject, time, classroom, teacherId: req.user.id,
     });
+
     await lesson.save();
+    const user = await User.findById(req.user.id);
+    user.lessons.push(lesson.id);
+    await user.save();
     res.json(lesson);
   } catch (err) {
     console.error(err.message);
