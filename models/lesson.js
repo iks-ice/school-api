@@ -15,4 +15,4 @@ const LessonSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('users', LessonSchema);
+module.exports = mongoose.model('lessons', LessonSchema);
