@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const checkAuth = require('../middlewares/checkAuth');
 const Lesson = require('../models/lesson');
+const { addLesson } = require('../controllers/lessons');
 
 router.get('/', checkAuth, async (req, res) => {
   try {
@@ -10,4 +11,7 @@ router.get('/', checkAuth, async (req, res) => {
     console.error(err.message);
   }
 });
+
+
+router.post('/', checkAuth, addLesson);
 module.exports = router;
