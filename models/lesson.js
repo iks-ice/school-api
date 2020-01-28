@@ -14,7 +14,7 @@ const LessonSchema = mongoose.Schema({
     required: true,
   },
   classroom: {
-    type: Number,
+    type: String,
     require: true,
   },
 });
