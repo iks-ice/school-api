@@ -1,9 +1,11 @@
 
 const router = require('express').Router();
-const checkAuth = require('../middlewares/checkAuth');
+const { check } = require('express-validator');
 
-router.get('/', checkAuth, (req, res) => {
-  res.json(req.user);
-});
+
+router.post('/', [
+  check('email', 'Email is required').isEmail(),
+  check('password', 'Password is required').isLength({ min: 6 }),
+], require('../controllers/auth/login'));
 
 module.exports = router;
