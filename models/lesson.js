@@ -10,7 +10,7 @@ const LessonSchema = mongoose.Schema({
     ref: 'users',
   },
   time: {
-    type: Date,
+    type: String,
     required: true,
   },
   classroom: {
