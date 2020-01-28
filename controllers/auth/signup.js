@@ -14,7 +14,12 @@ module.exports = async (req, res) => {
     if (user) {
       return res.json({ msg: 'User exists' });
     }
-    user = new User({ name, email, password });
+    // Assumption that a user can have either teacher or student domain only
+    const regexEmail = /(?<=@)(.*?)(?=\.)/;
+    const role = email.match(regexEmail)[0];
+    user = new User({
+      name, email, password, role,
+    });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
