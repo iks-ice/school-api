@@ -80,9 +80,29 @@ const del = async (req, res) => {
     res.status(500).json({ msg: 'Server Error' });
   }
 };
+
+const add = async (req, res) => {
+  try {
+    const lesson = await Lesson.findById(req.params.id);
+    if (!lesson) {
+      return res.status(400).json({ msg: 'Lesson does not exist' });
+    }
+    const user = await User.findById(req.user.id);
+    if (user.lessons.includes(req.params.id)) {
+      return res.status(400).json({ msg: 'You have already added this lesson to your list' });
+    }
+    user.lessons.push(lesson.id);
+    await user.save();
+    res.json(user.lessons);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server Error' });
+  }
+};
 module.exports = {
   read,
   create,
   update,
   del,
+  add,
 };

@@ -2,10 +2,11 @@ const router = require('express').Router();
 const { check } = require('express-validator');
 const { checkAuth, checkRole } = require('../middlewares/checkPermissons');
 const {
-  read, create, update, del,
+  read, create, update, del, add,
 } = require('../controllers/lessons');
 
 router.get('/', checkAuth, read);
+router.get('/:id', checkAuth, add);
 router.post('/', checkAuth, checkRole, [
   check('subject', 'Subject is required').not().isEmpty(),
   check('time', 'Date and time  are required').not().isEmpty(),
