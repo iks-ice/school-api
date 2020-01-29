@@ -34,6 +34,5 @@
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "nodemon": "^2.0.2"
-  },
-  "dataBaseScema": "https://whimsical.com/3KgbXQz8sDNDXCnXNU8y6v"
+  }
 }
