@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+const { validationResult } = require('express-validator');
 const Lesson = require('../../models/lesson');
 const User = require('../../models/user');
 
@@ -15,6 +16,10 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
   const { subject, time, classroom } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json(errors);
+  }
   try {
     const lessons = await Lesson.find({ time, classroom });
     if (lessons.length !== 0) {
